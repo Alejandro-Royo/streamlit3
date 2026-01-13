@@ -14,13 +14,14 @@ DEFAULT_CSV_PATH = "parte_1.csv"
 
 with st.sidebar:
     st.header("Datos")
-    csv_path = st.text_input("Ruta del CSV", value=DEFAULT_CSV_PATH)
-    st.divider()
-    st.header("Filtros globales")
-    st.write("Estos filtros afectan a todas las pestañas.")
-    # Los filtros se rellenan tras cargar los datos
+    uploaded = st.file_uploader("Sube un CSV", type=["csv"])
+    st.write("Si no subes archivo, se usará la ruta local:")
+    csv_path = st.text_input("Ruta del CSV (solo local)", value="parte_1.csv")
+    if uploaded is not None:
+        df = load_data(uploaded)
+    else:
+        df = load_data(csv_path)
 
-df = load_data(csv_path)
 
 # Sidebar filters
 with st.sidebar:
